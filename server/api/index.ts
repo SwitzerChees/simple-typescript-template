@@ -1,9 +1,13 @@
 import { Request, Response, Express } from 'express'
 
-export const loadAPI = (app: Express) => {
-  app.get('/hello', sayHello)
-}
+export class API {
+  app: Express
+  constructor(app: Express) {
+    this.app = app
+    this.app.get('/hello', this.sayHello)
+  }
 
-const sayHello = (req: Request, res: Response) => {
-  res.send('Hello There!')
+  public sayHello(req: Request, res: Response) {
+    res.send('Hello There!')
+  }
 }
