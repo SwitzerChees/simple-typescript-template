@@ -7,7 +7,7 @@
         "name": "Vite: Server Debug",
         "cwd": "${workspaceFolder}",
         "runtimeExecutable": "yarn",
-        "args": ["dev"],
+        "args": ["dev:server"],
         "sourceMaps": true,
         "resolveSourceMapLocations": ["${workspaceFolder}/**", "!**/node_modules/**"],
         "outputCapture": "std",
