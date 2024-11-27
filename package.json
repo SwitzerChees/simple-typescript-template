@@ -15,7 +15,7 @@
   },
   "dependencies": {
     "express": "4.21.1",
-    "mariadb": "^3.4.0",
+    "mysql2": "^3.11.4",
     "vite-plugin-live-reload": "^3.0.3"
   },
   "devDependencies": {

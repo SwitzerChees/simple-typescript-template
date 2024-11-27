@@ -1,13 +1,13 @@
-import mariadb from 'mariadb'
-import { Pool } from 'mariadb'
+import mysql from 'mysql2/promise'
 import { USER_TABLE, TWEET_TABLE } from './schema'
 
 export class Database {
   // Properties
-  private _pool: Pool
+  private _pool: mysql.Pool
+
   // Constructor
   constructor() {
-    this._pool = mariadb.createPool({
+    this._pool = mysql.createPool({
       database: process.env.DB_NAME || 'minitwitter',
       host: process.env.DB_HOST || 'localhost',
       user: process.env.DB_USER || 'minitwitter',
@@ -16,6 +16,7 @@ export class Database {
     })
     this.initializeDBSchema()
   }
+
   // Methods
   private initializeDBSchema = async () => {
     console.log('Initializing DB schema...')
@@ -26,11 +27,14 @@ export class Database {
   public executeSQL = async (query: string) => {
     try {
       const conn = await this._pool.getConnection()
-      const res = await conn.query(query)
-      conn.end()
-      return res
+      try {
+        const [results] = await conn.query(query)
+        return results
+      } finally {
+        conn.release() // Use `release` instead of `end` to keep the connection in the pool
+      }
     } catch (err) {
-      console.log(err)
+      console.error('Error executing query:', err)
     }
   }
 }
