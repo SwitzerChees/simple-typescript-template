@@ -4,6 +4,8 @@ import http from 'http'
 import { resolve, dirname } from 'path'
 import { Database } from './database'
 
+const PORT = parseInt(process.env.PORT || '3000')
+
 class Backend {
   // Properties
   private _app: Express
@@ -50,8 +52,8 @@ class Backend {
 
   private startServer(): void {
     if (this._env === 'production') {
-      http.createServer(this.app).listen(3000, () => {
-        console.log('Server is listening!')
+      http.createServer(this.app).listen(PORT, () => {
+        console.log(`Server is listening on Port ${PORT}!`)
       })
     }
   }
