@@ -6,7 +6,7 @@
   "license": "MIT",
   "type": "module",
   "scripts": {
-    "dev": "concurrently \"yarn dev:server\" \"yarn dev:client\"",
+    "dev": "concurrently \"npm run dev:server\" \"npm run dev:client\"",
     "dev:server": "vite",
     "dev:client": "livereload client/ -p 35729 -e html,js,css",
     "build": "vite build",
