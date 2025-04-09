@@ -25,16 +25,15 @@ export class Database {
   }
 
   public executeSQL = async (query: string) => {
+    let conn: mysql.PoolConnection | undefined
     try {
-      const conn = await this._pool.getConnection()
-      try {
-        const [results] = await conn.query(query)
-        return results
-      } finally {
-        conn.release() // Use `release` instead of `end` to keep the connection in the pool
-      }
+      conn = await this._pool.getConnection()
+      const [results] = await conn.query(query)
+      return results
     } catch (err) {
       console.error('Error executing query:', err)
+    } finally {
+      if (conn) conn.release() // Use `release` instead of `end` to keep the connection in the pool
     }
   }
 }
